@@ -7,4 +7,4 @@ FatFreeCRM::Plugin.register(:web_to_lead) do
   description "Create Fat Free CRM leads from the data submitted via remote web form."
 end
 
-require "crm_web_to_lead.rb"
+require File.dirname(__FILE__) + '/../../lib/crm_web_to_lead/lib/crm_web_to_lead'
