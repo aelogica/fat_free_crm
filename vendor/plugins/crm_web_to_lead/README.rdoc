@@ -1,0 +1,57 @@
+=== Web-To-Lead Capture Plugin for Fat Free CRM
+
+This plugin shows how to implement Fat Free CRM application controller
+callback hook to capture lead data submitted from remote form. For more
+information about Fat Free CRM visit http://github.com/michaeldv/fat_free_crm/tree/master
+
+=== Installation
+
+The plugin installs just like any Ruby on Rails plugin packaged as git.
+Assuming that you have Fat Free CRM up and running:
+
+  $ ./script/plugin install git://github.com/michaeldv/crm_web_to_lead.git
+
+The sample plugin will be installed in vendor/plugins/crm_web_to_lead directory.
+
+=== Quick How To
+
+To submit a lead remote form should POST two extra hidden fields to
+identify the user who will own the lead:
+
+  <input type="hidden" name="authorization" value="-- users.password_hash here --">
+  <input type="hidden" name="token" value="-- users.password_salt here --">
+
+Two more hidden fields specify redirection URLs to handle successful
+submissions and possible validation errors:
+
+  <input type="hidden" name="on_success" value="-- success URL here --">
+  <input type="hidden" name="on_success" value="-- failure URL here --">
+
+The following sample is a good start to build your own lead capture form.
+
+  <html>
+  <body>
+    <form action="http://localhost:3000/leads/create" method="post">
+      <input name="lead[first_name]" value="">
+      <input name="lead[last_name]" value="">
+      <input name="lead[source]" value="Web">
+      <input name="authorization" value="?">
+      <input name="token" value="?"
+      <input name="on_success" value="http://www.yoursite.com/success">
+      <input name="on_failure" value="http://www.yoursite.com/failure">
+      <input type="submit" value="OK">
+    </form
+  </body>
+  </html>
+
+Replace question marks with the actual values of +password_hash+ and
++password_salt+ as set in +users+ table. Successful lead submissions
+get logged in Rails log file.
+
+Enjoy!
+
+---
+Copyright (c) 2009 by Michael Dvorkin, released under the MIT license.
+
+
+
